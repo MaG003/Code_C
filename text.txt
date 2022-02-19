@@ -1,0 +1,23 @@
+void load(char *filename){
+    char name[MAX];  
+    char str[MAX];
+    char *p;
+    FILE *f = fopen(filename,"r");
+    fscanf(f,"%s",&name);
+    rewind(f);
+    root = makeNode(name);
+    while(!feof(f)){
+        fgets(str, MAX, f);
+        if(strcmp(str,"$$") !=0){
+            p = strtok(str," $");
+            strcpy(name,p);
+            while(p != NULL){
+                p = strtok(NULL," $");
+                if(p != NULL){
+                    addChild(name,p);
+                }
+            }
+        }
+    }
+    fclose(f);
+}
